@@ -78,7 +78,7 @@ class Lottery_choice(object):
                     finalnum = pd.Series(Counter(self.choice_nums_array)).sort_values(ascending= False)
                     today = datetime.today()
                     file_name = "dlt_"+today.strftime("%Y%m%d")
-                    finalnum.to_csv(r'..\lottery-machine-gun\prediction_lottery\%s.csv' % file_name)
+                    finalnum.to_csv(r'..\lottery_guns\prediction_lottery\%s.csv' % file_name)
                     break #
 
 def run_ssq():

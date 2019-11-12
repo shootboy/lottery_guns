@@ -63,7 +63,7 @@ pp = lists_combination([list4, list5, list6])
 df = pd.DataFrame([pp,ss]).T
 today = datetime.today()
 file_name = "soccer_"+today.strftime("%Y%m%d")
-path = os.path.expanduser(r'..\lottery-machine-gun\prediction_lottery\%s.csv' % file_name)
+path = os.path.expanduser(r'..\lottery_guns\prediction_lottery\%s.csv' % file_name)
 df.to_csv(path)
 print pp
 print ss
