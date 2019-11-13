@@ -79,9 +79,9 @@ class Soccer_Combi_pre(object):
             choice_df = df[df['odds_product']>standard_odds].sort_index()
             print choice_df
             today = datetime.today()
-            file_name = "soccer_"+today.strftime("%Y%m%d")+"_$_{}".format(N)
-            path = os.path.expanduser(r'..\lottery_guns\prediction_lottery\%s.csv' % file_name)
-            choice_df.to_csv(path)
+            #file_name = "soccer_"+today.strftime("%Y%m%d")+"_$_{}".format(N)
+            #path = os.path.expanduser(r'..\lottery_guns\prediction_lottery\%s.csv' % file_name)
+            #choice_df.to_csv(path)
         except Exception as e:
             print e
 
