@@ -43,6 +43,7 @@ class Soccer_Combi_pre(object):
         """
         if len(self.key_pools)<N:
             print "not enough!!"
+            return None
         elif N<=2:
             lists = self.comb(self.key_pools,N)
             return [keyfunc(i[0], i[-1]) for i in lists]
@@ -56,6 +57,7 @@ class Soccer_Combi_pre(object):
         """
         if len(self.odds_pools)<N:
             print "not enough!!"
+            return None
         elif N<=2:
             lists = self.comb(self.odds_pools,N)
             return [productfunc(i[0], i[-1]) for i in lists]
@@ -67,20 +69,21 @@ class Soccer_Combi_pre(object):
         """建立数据档案并2csv;
            对乘积进行排序筛选后给出理想场次
         """
-        keys_list = np.concatenate(np.array(self.key_comb(N)))
-        product_odds_list = np.concatenate(np.array(self.product_comb(N)))
-        #print product_odds_list
-        #print self.product_comb(N)
-        df = pd.DataFrame(product_odds_list, keys_list)
-        df.columns = ['odds_product']
-        # 筛选
-        standard_odds = pow(3, N)+1
-        choice_df = df[df['odds_product']>standard_odds].sort_index()
-        print choice_df
-        today = datetime.today()
-        file_name = "soccer_"+today.strftime("%Y%m%d")
-        path = os.path.expanduser(r'..\lottery_guns\prediction_lottery\%s.csv' % file_name)
-        choice_df.to_csv(path)
+        try:
+            keys_list = np.concatenate(np.array(self.key_comb(N)))
+            product_odds_list = np.concatenate(np.array(self.product_comb(N)))
+            df = pd.DataFrame(product_odds_list, keys_list)
+            df.columns = ['odds_product']
+            # 筛选
+            standard_odds = pow(3, N)+1
+            choice_df = df[df['odds_product']>standard_odds].sort_index()
+            print choice_df
+            today = datetime.today()
+            file_name = "soccer_"+today.strftime("%Y%m%d")+"_$_{}".format(N)
+            path = os.path.expanduser(r'..\lottery_guns\prediction_lottery\%s.csv' % file_name)
+            choice_df.to_csv(path)
+        except Exception as e:
+            print e
 
 def run():
     'setttings'
@@ -108,18 +111,18 @@ def run():
     odds_pools = [
         [match_1['win1'], match_1['draw1'], match_1['lose1']],
         [match_2['win2'], match_2['draw2'], match_2['lose2']],
-        [match_3['win3'], match_3['draw3'], match_3['lose3']],
-        [match_4['win4'], match_4['draw4'], match_4['lose4']],
+        #[match_3['win3'], match_3['draw3'], match_3['lose3']],
+        #[match_4['win4'], match_4['draw4'], match_4['lose4']],
     ]
 
     key_pools = [
         [match_1['win1'], match_1['draw1'], match_1['lose1']],
         [match_2['win2'], match_2['draw2'], match_2['lose2']],
-        [match_3['win3'], match_3['draw3'], match_3['lose3']],
-        [match_4['win4'], match_4['draw4'], match_4['lose4']],
+        #[match_3['win3'], match_3['draw3'], match_3['lose3']],
+        #[match_4['win4'], match_4['draw4'], match_4['lose4']],
     ]
     engine = Soccer_Combi_pre(odds_pools, key_pools)
-    engine.data2csv(N=3)
+    engine.data2csv(N=2)
 
 if __name__ == "__main__":
     run()
